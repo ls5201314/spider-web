@@ -1,0 +1,360 @@
+<nz-card>
+  <ng-template #body>
+    <nz-spin [nzSpinning]="loading">
+      <div nz-form>
+        <div nz-row>
+          <span style="font-size:20px;font-weight:600;">新建采集任务</span>
+        </div>
+        <div nz-row>
+          <nz-collapseset>
+            <nz-collapse nzTitle="基本信息" style="font-size:15px;font-weight:300;" [nzActive]="true">
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>站点名称</label>
+                    <span><nz-input [(ngModel)]="settingInfo.name" [nzPlaceHolder]="'请输入站点名称'"></nz-input></span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>url</label>
+                    <span><nz-input [(ngModel)]="settingInfo.url" [nzPlaceHolder]="'请输入采集站点url'"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>分类</label>
+                    <nz-select [(ngModel)]="settingInfo.assortment" nzPlaceHolder="请选择材料分类">
+                      <nz-option *ngFor="let assortment of assortments" [nzLabel]="assortment.name" [nzValue]="assortment.id">
+                      </nz-option>
+                    </nz-select>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>域</label>
+                    <span><nz-input [(ngModel)]="settingInfo.domain"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>UserAgent</label>
+                    <span><nz-input [(ngModel)]="settingInfo.userAgent"></nz-input></span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>保存目录</label>
+                    <span><nz-input [(ngModel)]="settingInfo.saveDir" [nzPlaceHolder]="'请选择目录'" nzReadonly="true"></nz-input></span>
+                    <button nz-button [nzType]="'default'">
+                      <span>选择</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>Cookie</label>
+                    <span><nz-input [(ngModel)]="settingInfo.cookie"></nz-input></span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>Referer</label>
+                    <span><nz-input [(ngModel)]="settingInfo.referer"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+            </nz-collapse>
+          </nz-collapseset>
+        </div>
+
+        <div nz-row>
+          <nz-collapseset>
+            <nz-collapse nzTitle="高级" style="font-size:15px;font-weight:300;" [nzActive]="true">
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="8" style="text-align:left">
+                    <label>时间间隔</label>
+                    <span><nz-input [(ngModel)]="settingInfo.sleepTime"></nz-input>毫秒</span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="8" style="text-align:left">
+                    <label>线程</label>
+                    <span><nz-input [(ngModel)]="settingInfo.thread"></nz-input></span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="8" style="text-align:left">
+                    <label>深度</label>
+                    <span><nz-input [(ngModel)]="settingInfo.depth"></nz-input></span>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="8" style="text-align:left">
+                    <label>采集插件</label>
+                    <nz-select [(ngModel)]="settingInfo.plug" nzPlaceHolder="">
+                      <nz-option *ngFor="let plug of plugs" [nzLabel]="plug.name" [nzValue]="plug.id">
+                      </nz-option>
+                    </nz-select>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="8" style="text-align:left">
+                    <label nz-checkbox [(ngModel)]="settingInfo.download ">
+                      <span>下载网页</span>
+                    </label>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="8" style="text-align:left">
+                    <label nz-checkbox [(ngModel)]="settingInfo.duplicateRemoval ">
+                      <span>公共排重</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="1" style="text-align:left">
+                    <label nz-checkbox [(ngModel)]="settingInfo.agent ">
+                      <span>代理</span>
+                    </label>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="12" style="text-align:left">
+                    <label>IP</label>
+                    <span><nz-input [(ngModel)]="settingInfo.ip"></nz-input></span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>端口</label>
+                    <span><nz-input [(ngModel)]="settingInfo.port"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col style="text-align:left">
+                    <label>采集规则</label>
+                    <nz-radio-group [(ngModel)]="settingInfo.rule">
+                      <label nz-radio [nzValue]="'1'">
+                        <span>按域扩展</span>
+                      </label>
+                      <label nz-radio [nzValue]="'2'">
+                        <span>层次扩展</span>
+                      </label>
+                      <label nz-radio [nzValue]="'3'">
+                        <span>目录扩展</span>
+                      </label>
+                      <label nz-radio [nzValue]="'4'">
+                        <span>站内扩展</span>
+                      </label>
+                    </nz-radio-group>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col style="text-align:left">
+                    <label>启动方式</label>
+                    <nz-radio-group [(ngModel)]="settingInfo.startupMode">
+                      <label nz-radio [nzValue]="'1'">
+                        <span>手动</span>
+                      </label>
+                      <label nz-radio [nzValue]="'2'">
+                        <span>立即</span>
+                      </label>
+                      <label nz-radio [nzValue]="'3'">
+                        <span>定时</span>
+                      </label>
+                    </nz-radio-group>
+                    <nz-select [(ngModel)]="settingInfo.plug" nzPlaceHolder="">
+                      <nz-option *ngFor="let plug of plugs" [nzLabel]="plug.name" [nzValue]="plug.id">
+                      </nz-option>
+                    </nz-select>
+                  </div>
+                </div>
+              </div>
+
+            </nz-collapse>
+          </nz-collapseset>
+        </div>
+
+        <div nz-row>
+          <nz-collapseset>
+            <nz-collapse nzTitle="采集规则(正则表达式)" style="font-size:15px;font-weight:300;" [nzActive]="true">
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col  style="text-align:left">
+                    <label>列表URL正则</label>
+                    <span><nz-input [(ngModel)]="settingInfo.listUrlRegex"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col style="text-align:left">
+                    <label>文章URL正则</label>
+                    <span><nz-input [(ngModel)]="settingInfo.contentUrlRegex"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col style="text-align:left">
+                    <label>标题XPath</label>
+                    <span><nz-input [(ngModel)]="settingInfo.titleXPath"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col style="text-align:left">
+                    <label>内容XPath</label>
+                    <span><nz-input [(ngModel)]="settingInfo.contentXPath"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>时间XPath</label>
+                    <span><nz-input [(ngModel)]="settingInfo.dateXPath"></nz-input></span>
+                  </div>
+
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>内容正则</label>
+                    <span><nz-input [(ngModel)]="settingInfo.dateRegex"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>摘要XPath</label>
+                    <span><nz-input [(ngModel)]="settingInfo.abstractXPath"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col [nzSpan]="13" style="text-align:left">
+                    <label>分页参数</label>
+                    <span><nz-input [(ngModel)]="settingInfo.pagination"></nz-input></span>
+                  </div>
+
+                  <div nz-form-label nz-col [nzSpan]="11" style="text-align:left">
+                    <label>页码范围</label>
+                    <span><nz-input [(ngModel)]="settingInfo.startPage"></nz-input></span>至<span><nz-input [(ngModel)]="settingInfo.endPage"></nz-input></span>
+                  </div>
+                </div>
+              </div>
+            </nz-collapse>
+          </nz-collapseset>
+        </div>
+
+        <div nz-row>
+          <nz-collapseset>
+            <nz-collapse nzTitle="正文" style="font-size:15px;font-weight:300;" [nzActive]="true">
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col  [nzSpan]="12" style="text-align:left">
+                    <label>标题过滤</label>
+                    <span><nz-input [(ngModel)]="settingInfo.titleFiltering"></nz-input></span>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="6" style="text-align:left">
+                    <label nz-checkbox [(ngModel)]="settingInfo.webTitle ">
+                      <span>采用网页标题</span>
+                    </label>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="6" style="text-align:left">
+                    <label nz-checkbox [(ngModel)]="settingInfo.linkTitle ">
+                      <span>采用链接标题</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </nz-collapse>
+          </nz-collapseset>
+        </div>
+
+        <div nz-row>
+          <nz-collapseset>
+            <nz-collapse nzTitle="输出" style="font-size:15px;font-weight:300;" [nzActive]="true">
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <div nz-form-label nz-col  [nzSpan]="12" style="text-align:left">
+                    <label>每</label>
+                    <span><nz-input [(ngModel)]="settingInfo.num"></nz-input></span>
+                    <label>条记录写入文件一次</label>
+                  </div>
+                  <div nz-form-label nz-col [nzSpan]="6" style="text-align:left">
+                    <label nz-checkbox [(ngModel)]="settingInfo.image ">
+                      <span>提取正文图片</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </nz-collapse>
+          </nz-collapseset>
+        </div>
+
+        <div nz-row>
+          <nz-collapseset>
+            <nz-collapse nzTitle="更新" style="font-size:15px;font-weight:300;" [nzActive]="true">
+              <div nz-col [nzSpan]="24">
+                <div nz-form-item nz-row>
+                  <label>循环更新</label>
+                  <div nz-form-label nz-col style="text-align:left">
+                    <nz-radio-group >
+                      <label nz-radio [nzValue]="'1'">
+                        <label>每</label>
+                        <span><nz-input ></nz-input></span>
+                        <label>小时</label>
+                      </label>
+                      <label nz-radio [nzValue]="'2'">
+                        <label>每</label>
+                        <span><nz-input ></nz-input></span>
+                        <label>分钟</label>
+                      </label>
+                      <label nz-radio [nzValue]="'3'">
+                        <label>按周期更新</label>
+                        <span><nz-input ></nz-input></span>
+                        <label>天</label>
+                        <label>时间</label>
+                        <span><nz-input ></nz-input></span>
+                        <label>点</label>
+                        <span><nz-input ></nz-input></span>
+                        <label>分</label>
+                      </label>
+                      <label nz-radio [nzValue]="'4'">
+                        <label>自定义更新</label>
+                        <span><nz-input ></nz-input></span>
+                      </label>
+                    </nz-radio-group>
+                  </div>
+                </div>
+              </div>
+            </nz-collapse>
+          </nz-collapseset>
+        </div>
+        <div style="text-align:right">
+          <button nz-button [nzType]="'primary'" (click)="submitForm()">
+            <i class="anticon"></i><span>确定</span>
+          </button>
+          <button nz-button>
+            <i class="anticon"></i><span>取消</span>
+          </button>
+        </div>
+
+      </div>
+    </nz-spin>
+  </ng-template>
+</nz-card>
